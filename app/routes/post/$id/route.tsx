@@ -67,10 +67,9 @@ function route() {
 						</div>
 					) : (
 						<div className="h-[250px] md:h-[400px] lg:h-[500px] bg-base-200">
-
-						<ImageViewer
-							src={data.data?.content_url ?? undefined}
-						/>
+							<ImageViewer
+								src={data.data?.content_url ?? undefined}
+							/>
 						</div>
 					)}
 					<div className="mt-2 p-4 px-2 bg-base-200 rounded-md">

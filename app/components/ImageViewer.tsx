@@ -21,7 +21,7 @@ function ImageViewer({ src }: { src?: string }) {
 			</button>
 			<Suspense>
 				<Lightbox
-					plugins={[Fullscreen,Zoom,Download]}
+					plugins={[Fullscreen, Zoom, Download]}
 					slides={[{ src: src as string, width: 1000, height: 700 }]}
 					className="w-full h-full"
 					open={open}
