@@ -11,7 +11,7 @@ let UserLiked = (props: { user_data: USER }) => {
 		queryKey: ["liked_posts"],
 		queryFn: async () =>
 			await getFavourites(page == 0 ? 1 : page, 10, props.user_data.id),
-        refetchOnWindowFocus:false
+		refetchOnWindowFocus: false,
 	});
 	if (data.isFetching) {
 		return <div>fetching</div>;

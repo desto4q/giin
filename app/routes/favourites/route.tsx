@@ -24,15 +24,16 @@ function route() {
 	return (
 		<div className="p-2">
 			<div className="flex items-center gap-2">
-			<div className="size-16 rounded-full grid place-items-center bg-primary/25 text-xl">
-				{user_data.user_info.username[0]}
+				<div className="size-16 rounded-full font-black capitalize grid place-items-center bg-primary/25 text-xl">
+					{user_data.user_info.username[0]}
+				</div>
+				<div>
+					<div className="text-lg font-bold ">
+						{user_data.user_info.username}
+					</div>
+				</div>
 			</div>
-			<div>
-				<div className="text-lg">{user_data.user_info.username}</div>
-			</div>
-
-			</div>
-			<h2>Favourites</h2>
+			<h2 className="py-2 text-lg font-bold">Favourites</h2>
 			<UserLiked user_data={user_data} />
 		</div>
 	);

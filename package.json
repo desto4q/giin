@@ -50,7 +50,8 @@
     "use-debounce": "^10.0.4",
     "video-metadata-thumbnails": "^1.0.22",
     "vimond-replay": "^4.0.0",
-    "vite-plugin-cjs-interop": "^2.2.0"
+    "vite-plugin-cjs-interop": "^2.2.0",
+    "yet-another-react-lightbox": "^3.22.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.16.2",

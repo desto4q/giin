@@ -43,6 +43,16 @@ function route() {
 	}
 
 	let user_info = sessionState as USER;
+
+	if (data.isFetching) {
+		return (
+			<div className="flex gap-2 px-4 flex-col">
+				<div className="h-[400px] skeleton w-full"></div>
+				<div className="h-[400px] skeleton w-full"></div>
+			</div>
+		);
+	}
+	// return <>{JSON.stringify(data.data)}</>
 	return (
 		<div className="p-2">
 			<section className="flex flex-col">
@@ -52,11 +62,16 @@ function route() {
 							<Audio />
 						</div>
 					) : data.data?.content_type == "video" ? (
-						<VideoPlayer src={data.data?.content_url ?? ""} />
+						<div className="h-[250px] md:h-[400px] lg:h-[500px] bg-base-200">
+							<VideoPlayer src={data.data?.content_url ?? ""} />
+						</div>
 					) : (
+						<div className="h-[250px] md:h-[400px] lg:h-[500px] bg-base-200">
+
 						<ImageViewer
 							src={data.data?.content_url ?? undefined}
 						/>
+						</div>
 					)}
 					<div className="mt-2 p-4 px-2 bg-base-200 rounded-md">
 						{data.isFetching ? (

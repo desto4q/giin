@@ -104,12 +104,18 @@ const getFavourites = async (page: number, limit: number, id: string) => {
 };
 
 const getSinglePost = async (id: any) => {
+	console.log(id)
+	// let { data, error } = await supabase
+	// 	.from("posts")
+	// 	.select("*, user_info(username)")
+	// 	.eq("user_id", id)
+	// 	.single();
+
 	let { data, error } = await supabase
 		.from("posts")
 		.select("*, user_info(username)")
-		.eq("user_id", id)
+		.eq("id", id)
 		.single();
-
 	if (error) {
 		throw new Error(error as any);
 	}
