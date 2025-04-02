@@ -12,9 +12,9 @@ function ProfilePostTab(props: USER) {
 	if (data.isFetching) {
 		return <>loading</>;
 	}
-    if (data.error){
-        return <>error</>
-    }
+	if (data.error) {
+		return <>error</>;
+	}
 	return (
 		<div className="columns-3">
 			{data.data?.map((e) => {

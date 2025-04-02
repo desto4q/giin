@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@remix-run/react";
-import { Bell, Home, LucideOctagon, MessageCircle, Plus } from "lucide-react";
+import { Heart, Home, LucideOctagon, MessageCircle, Plus } from "lucide-react";
 import UserBoxSidebar from "./UserBoxSidebar.client";
 import { Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
@@ -15,9 +15,9 @@ let links = [
 		Icon: Plus,
 	},
 	{
-		name: "notifications",
-		path: "/notifications",
-		Icon: Bell,
+		name: "favourites",
+		path: "/favourites",
+		Icon: Heart,
 	},
 	{
 		name: "messages",

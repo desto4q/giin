@@ -110,7 +110,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 					<aside className="hidden sm:block">
 						<Sidebar />
 					</aside>
-					<div className="w-full rounded-xl drop-shadow-xl overflow-hidden bg-base-100">
+					<div className="w-full rounded-xl drop-shadow-xl overflow-hidden bg-base-100 relative">
 						<NavBar />
 						<main className="">
 							{children}

@@ -1,5 +1,4 @@
 import CryptoJS from "crypto-js/";
-
 const getSecretKey = async () => {
 	const response = await fetch("/api/key", { method: "POST" });
 	const data = await response.json();

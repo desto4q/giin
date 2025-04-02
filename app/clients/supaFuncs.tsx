@@ -68,19 +68,46 @@ const uploadPost = async (object: POSTSCHEMATYPE) => {
 	return data;
 };
 
-const getPosts = async () => {
-	let { data, error } = await supabase.from("posts").select("*");
+const pagesCalculator = (count: number, limit: number) =>
+	count ? Math.ceil(count / limit) : 0;
+
+const getPosts = async (page: number, limit: number) => {
+	const from = (page - 1) * limit;
+	const to = from + limit - 1;
+	console.log(from);
+	let { data, error, count } = await supabase
+		.from("posts")
+		.select("*", { count: "estimated" })
+		.range(from, to);
 	if (error) {
 		throw new Error(error as any);
 	}
-	return data;
+	const totalPages = pagesCalculator(count as number, limit);
+	return { data, totalPages };
+};
+
+const getFavourites = async (page: number, limit: number, id: string) => {
+	const from = (page - 1) * limit;
+	const to = from + limit - 1;
+	let { data, error, count } = await supabase
+		.from("saved")
+		.select("*, posts(*)", { count: "estimated" })
+		.eq("user_id", id)
+		.range(from, to);
+	if (error) {
+		console.log(error);
+		throw new Error(error as any);
+	}
+	console.log(data);
+	const totalPages = pagesCalculator(count as number, limit);
+	return { data, totalPages };
 };
 
 const getSinglePost = async (id: any) => {
 	let { data, error } = await supabase
 		.from("posts")
 		.select("*, user_info(username)")
-		.eq("id", id)
+		.eq("user_id", id)
 		.single();
 
 	if (error) {
@@ -239,7 +266,53 @@ let deletePost = async (id: number, user_id: string) => {
 	}
 };
 
+let likePost = async (post_id: number, user_id: string) => {
+	let { data, error } = await supabase
+		.from("saved")
+		.insert([
+			{
+				post_id: post_id,
+				user_id: user_id,
+			},
+		])
+		.select("*");
+	if (error) {
+		throw new Error(error as any);
+	}
+	return data;
+};
+let unLikePost = async (post_id: number, user_id: string) => {
+	let { data, error } = await supabase
+		.from("saved")
+		.delete()
+		.eq("post_id", post_id)
+		.eq("user_id", user_id)
+		.select("*");
+	if (error) {
+		throw new Error(error as any);
+	}
+	return data;
+};
+
+async function checkIfUserLikedPost(post_id: number, user_id: string) {
+	const { data, error } = await supabase
+		.from("saved")
+		.select("*") // You can select specific columns if needed, e.g., 'user_id'
+		.eq("user_id", user_id)
+		.eq("post_id", post_id);
+
+	if (error) {
+		console.error("Error checking like:", error);
+		return false; // Or handle the error appropriately
+	}
+	// If 'data' is not null and has at least one element, the user has liked the post
+	return data && data.length > 0;
+}
+
 export {
+	unLikePost,
+	checkIfUserLikedPost,
+	likePost,
 	login,
 	logOutSesssion,
 	getUser,
@@ -251,6 +324,7 @@ export {
 	checkUserName,
 	signUp,
 	getPosts,
+	getFavourites,
 	deletePost,
 };
-export type { POSTSCHEMATYPE, USER, SIGNUPTYPE };
+export type { POSTSCHEMATYPE, USER, SIGNUPTYPE, POSTDATATYPE };

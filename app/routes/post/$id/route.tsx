@@ -3,10 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { deletePost, getSinglePost, USER } from "~/clients/supaFuncs";
 import { PropsWithChildren } from "react";
 import { Audio } from "react-loader-spinner";
-import VideoPlayer from "~/components/VideoPlayer.client";
+import VideoPlayer from "~/components/VideoPlayer";
 import { useAtom } from "jotai";
 import { sessionAtom } from "~/helpers/client_state";
 import { toast } from "react-toastify/unstyled";
+import ImageViewer from "~/components/ImageViewer";
+import LikeButton from "~/components/LikeButton";
+0;
 function route() {
 	let { id } = useParams();
 	let nav = useNavigate();
@@ -48,20 +51,31 @@ function route() {
 						<div className="h-[400px] grid place-items-center bg-base-200">
 							<Audio />
 						</div>
-					) : (
+					) : data.data?.content_type == "video" ? (
 						<VideoPlayer src={data.data?.content_url ?? ""} />
+					) : (
+						<ImageViewer
+							src={data.data?.content_url ?? undefined}
+						/>
 					)}
 					<div className="mt-2 p-4 px-2 bg-base-200 rounded-md">
 						{data.isFetching ? (
 							<div>...loadin</div>
 						) : (
-							<div className="flex flex-col gap-2  ">
-								<div className=" flex gap-2 flex-col md:flex-row  ">
+							<div className="flex flex-col gap-2">
+								<div className=" flex gap-2 flex-col md:flex-row">
 									<div className="w-full py-2  bg-base-100 rounded-md px-2">
+										{data.data ? (
+											<LikeButton
+												session_id={user_info.id}
+												{...data.data}
+												// {...data.data, user_id:user_info.id}
+											/>
+										) : null}
 										<h2 className="text-lg font-bold px-1">
 											{data.data?.title}
 										</h2>
-										<h2 className="text-md opacity-50 font-bold bg-base-200  p-2 mt-2 rounded-md">
+										<h2 className="text-sm mt-4 opacity-50 font-bold bg-base-200  p-2 rounded-md">
 											{data.data?.subtitle
 												? data.data.subtitle
 												: "no content"}
