@@ -19,7 +19,6 @@ function NavBar() {
 			<button
 				className="btn btn-ghost sm:hidden p-2"
 				onClick={() => {
-					console.log("ss")
 					SetSideBar(true);
 				}}
 			>
@@ -90,7 +89,7 @@ function NavBar() {
 					}}
 					className="btn btn-primary"
 				>
-					Sigin
+					Login
 				</button>
 			) : null}
 		</div>

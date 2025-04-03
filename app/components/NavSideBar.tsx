@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@remix-run/react";
+import { Link, useLocation, useNavigate } from "@remix-run/react";
 import { useAtom } from "jotai";
 import { Heart, Home, LucideOctagon, MessageCircle, Plus } from "lucide-react";
 import { useEffect } from "react";
@@ -31,6 +31,8 @@ function NavSidebar() {
 	let pathname = useLocation();
 	let [session, setSession] = useAtom(sessionAtom);
 	let [sidebarState, setSidebar] = useAtom(sidebarAtom);
+
+	let nav = useNavigate();
 	useEffect(() => {
 		const handleResize = () => {
 			if (window.innerWidth > 650) {
@@ -64,7 +66,7 @@ function NavSidebar() {
 				<motion.div
 					initial={{ x: "-100%" }}
 					animate={{ x: sidebarState ? 0 : "-100%" }}
-					transition={{ type: "spring", stiffness: 200, damping: 20 }}
+					transition={{ type: "ease", stiffness: 200, damping: 20 }}
 					className="h-full bg-base-100 w-xs px-2 flex flex-col gap-2"
 				>
 					<div className="h-20 flex items-center  gap-2 px-2 border-b border-b-primary/25">
@@ -79,6 +81,11 @@ function NavSidebar() {
 					<nav className=" w-full grow flex flex-col gap-2">
 						{links.map((e) => (
 							<Link
+								onClick={() => {
+									setTimeout(() => {
+										setSidebar(false);
+									}, 200);
+								}}
 								className={`btn ${
 									pathname.pathname == e.path
 										? "bg-primary/25"
@@ -112,7 +119,17 @@ function NavSidebar() {
 								</div>
 							)
 						) : (
-							<div className="btn btn-primary w-full ">Login</div>
+							<div
+								className="btn btn-primary w-full "
+								onClick={() => {
+									nav("/auth/login");
+									setTimeout(() => {
+										setSidebar(false);
+									}, 200);
+								}}
+							>
+								Login
+							</div>
 						)}
 					</div>
 				</motion.div>
