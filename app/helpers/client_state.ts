@@ -15,8 +15,7 @@ let tabs = ["edit", "posts"] as const;
 
 let tabAtom = atom<(typeof tabs)[number]>("posts");
 
-let sidebarAtom = atom<boolean>( false)
-export { userFormAtom, sessionAtom,tabAtom ,sidebarAtom};
+let sidebarAtom = atom<boolean>(false);
+export { userFormAtom, sessionAtom, tabAtom, sidebarAtom };
 
-	
 export type { AUTHFORM };

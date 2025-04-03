@@ -20,16 +20,14 @@ function Index() {
 	}
 	if (data.isFetching) {
 		return (
-			<div className="p2">
+			<div className="p-2 px-4">
 				<div className="grid grid-cols-[repeat(auto-fit,250px)] gap-4 p-2">
 					{tempArray.map((e, i) => {
 						return (
 							<div
 								className={`h-[200px] w-full skeleton`}
 								key={gen()}
-							>
-								
-							</div>
+							></div>
 						);
 					})}
 				</div>
@@ -40,7 +38,7 @@ function Index() {
 		return <></>;
 	}
 	return (
-		<div className="px-2  ">
+		<div className="pb-20  px-4 p-2 ">
 			<div className="columns-2 sm:columns-3 md:columns-4 lg:columns-6 p-2  rounded-md">
 				{data.data?.data.map((e) => (
 					<Card

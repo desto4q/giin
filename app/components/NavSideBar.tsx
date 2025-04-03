@@ -78,7 +78,7 @@ function NavSidebar() {
 						</a>
 						<p className="text-md  font-black">Giin</p>
 					</div>
-					<nav className=" w-full grow flex flex-col gap-2">
+					<nav className=" w-full grow flex flex-col gap-2 mt-4">
 						{links.map((e) => (
 							<Link
 								onClick={() => {
@@ -113,8 +113,8 @@ function NavSidebar() {
 										{session.user_info.username[0]}
 									</div>
 									<div>
-										<p>{session.user_info.username}</p>
-										<p>{session.user_info.fullname}</p>
+										<p className="font-bold capitalize">{session.user_info.username}</p>
+										<p className="text-sm opacity-45 font-bold">{session.user_info.fullname}</p>
 									</div>
 								</div>
 							)
