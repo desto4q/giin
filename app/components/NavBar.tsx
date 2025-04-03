@@ -14,7 +14,7 @@ function NavBar() {
 	let [sideBarState, SetSideBar] = useAtom(sidebarAtom);
 	let user_data = session as USER;
 	return (
-		<div className=" z-20 h-20  bg-base-100  w-full sticky top-0 flex items-center  px-4 gap-2">
+		<div className="z-20 h-20  bg-base-100  w-full sticky top-0 left-0 flex  items-center  px-4 gap-2">
 			{/* <p>{JSON.stringify(data.data)}</p> */}
 			<button
 				className="btn btn-ghost sm:hidden p-2"

@@ -47,7 +47,7 @@ function route() {
 	if (data.isFetching) {
 		return (
 			<div className="flex gap-2 px-4 flex-col">
-				<div className="h-[400px] skeleton w-full"></div>
+				<div className="h-[350px] skeleton w-full"></div>
 				<div className="h-[400px] skeleton w-full"></div>
 			</div>
 		);
@@ -62,11 +62,11 @@ function route() {
 							<Audio />
 						</div>
 					) : data.data?.content_type == "video" ? (
-						<div className="h-[250px] md:h-[400px] lg:h-[500px] bg-base-200">
+						<div className="h-[350px] md:h-[400px] lg:h-[500px] bg-base-200">
 							<VideoPlayer src={data.data?.content_url ?? ""} />
 						</div>
 					) : (
-						<div className="h-[250px] md:h-[400px] lg:h-[500px] bg-base-200">
+						<div className="h-[350px] md:h-[400px] lg:h-[500px] bg-base-200">
 							<ImageViewer
 								src={data.data?.content_url ?? undefined}
 							/>
@@ -78,14 +78,16 @@ function route() {
 						) : (
 							<div className="flex flex-col gap-2">
 								<div className=" flex gap-2 flex-col md:flex-row">
-									<div className="w-full py-2  bg-base-100 rounded-md px-2">
-										{data.data ? (
-											<LikeButton
-												session_id={user_info.id}
-												{...data.data}
-												// {...data.data, user_id:user_info.id}
-											/>
-										) : null}
+									<div className="w-full py-2   bg-base-100 rounded-md px-2">
+										<div className="my-2 flex items-center">
+											{data.data ? (
+												<LikeButton
+													session_id={user_info.id}
+													{...data.data}
+													// {...data.data, user_id:user_info.id}
+												/>
+											) : null}
+										</div>
 										<h2 className="text-lg font-bold px-1">
 											{data.data?.title}
 										</h2>

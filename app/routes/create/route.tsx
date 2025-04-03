@@ -1,4 +1,5 @@
 import { useNavigate } from "@remix-run/react";
+import { useAtom } from "jotai";
 import { UploadIcon } from "lucide-react";
 import {
 	ChangeEvent,
@@ -14,6 +15,7 @@ import {
 	uploadPost,
 	USER,
 } from "~/clients/supaFuncs";
+import { sessionAtom } from "~/helpers/client_state";
 import {
 	generate_image_thumb,
 	generate_thumb,
@@ -29,12 +31,14 @@ function route() {
 	let fileMetadata = useRef<File | null>(null);
 	let temp_url = useRef<string | any>("");
 	let content_type = useRef<"image" | "video" | null>(null);
-	let [session, setSession] = useState<"loading" | USER | null>("loading");
+	let [session, setSession] = useAtom<"loading" | USER | null>(sessionAtom);
 	useEffect(() => {
 		if (session == null) {
 			navigate("/auth/login");
 		}
 	}, [session]);
+	let user_info = session as USER;
+
 	let onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setVideo(null);
 		setImage(null);
@@ -65,6 +69,7 @@ function route() {
 
 	const onSubmit = async (e: SyntheticEvent) => {
 		e.preventDefault();
+
 		const form = e.target as HTMLFormElement;
 		const formData = new FormData(form);
 		const user = getSession();
@@ -79,6 +84,7 @@ function route() {
 		}
 		await handleImageUpload(uploadForm, formData, session as USER);
 	};
+
 	const handleImageUpload = async (
 		uploadForm: FormData,
 		formData: FormData,
@@ -118,7 +124,6 @@ function route() {
 		user: { id: string },
 		type: string
 	) => {
-		let user_info = session as USER;
 		const post: POSTSCHEMATYPE = {
 			title: (formData.get("title") as string) ?? "",
 			subtitle: (formData.get("content") as string) ?? "",
@@ -185,7 +190,7 @@ function route() {
 						className=" mt-2 cursor-pointer border rounded-md hover:border-primary duration-150 border-primary/20 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold  file:text-base-content file:bg-base-200"
 					/>
 				</div>
-				<div className="flex flex-col w-full gap-4">
+				<div className="flex flex-col w-full gap-4 mt-4 md:mt-0 px-2">
 					<div className="flex flex-col w-full ">
 						<label
 							htmlFor=""
