@@ -30,14 +30,6 @@ function route() {
 	let temp_url = useRef<string | any>("");
 	let content_type = useRef<"image" | "video" | null>(null);
 	let [session, setSession] = useState<"loading" | USER | null>("loading");
-
-	let updateSession = async () => {
-		setSession(await getSession());
-	};
-	useEffect(() => {
-		updateSession();
-	}, []);
-
 	useEffect(() => {
 		if (session == null) {
 			navigate("/auth/login");

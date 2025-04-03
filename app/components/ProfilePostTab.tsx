@@ -16,7 +16,7 @@ function ProfilePostTab(props: USER) {
 		return <>error</>;
 	}
 	return (
-		<div className="columns-3">
+		<div className="columns-3  md:columns-5">
 			{data.data?.map((e) => {
 				return (
 					<Card

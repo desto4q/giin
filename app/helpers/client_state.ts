@@ -13,8 +13,10 @@ type SESSIONTYPE = "loading" | USER | null;
 let sessionAtom = atom<SESSIONTYPE>("loading");
 let tabs = ["edit", "posts"] as const;
 
-let tabAtom = atom<(typeof tabs)[number]>("edit");
-export { userFormAtom, sessionAtom,tabAtom };
+let tabAtom = atom<(typeof tabs)[number]>("posts");
+
+let sidebarAtom = atom<boolean>( false)
+export { userFormAtom, sessionAtom,tabAtom ,sidebarAtom};
 
 	
 export type { AUTHFORM };

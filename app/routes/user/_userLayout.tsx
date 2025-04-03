@@ -1,22 +1,24 @@
 import { Outlet, useLocation, useNavigate, useParams } from "@remix-run/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { getSession, getUser, logOutSesssion, USER } from "~/clients/supaFuncs";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { getUser, logOutSesssion, USER } from "~/clients/supaFuncs";
+import { sessionAtom } from "~/helpers/client_state";
 
 function user() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const queryClient = useQueryClient();
 
-	let [logged, setLogged] = useState<USER | null>(null);
+	let [session, setSession] = useAtom<USER | null | "loading">(sessionAtom);
 	let { user } = useParams();
 	let user_name = user as string;
-	let updateSession = async () => {
-		setLogged(await getSession());
-	};
+
 	useEffect(() => {
-		updateSession();
-	}, []);
+		if (!session) {
+			navigate("/");
+		}
+	}, [session]);
 	useEffect(() => {
 		if (location.pathname === "/user" || location.pathname === "/user/") {
 			navigate("/");
@@ -29,7 +31,6 @@ function user() {
 			return await getUser(user_name);
 		},
 	});
-
 	if (data.isFetching) {
 		return (
 			<div className="h-[calc(100dvh-80px)] grid place-items-center">
@@ -61,6 +62,7 @@ function user() {
 			</div>
 		);
 	}
+	let user_data = session as USER;
 	return (
 		<div className="px-4">
 			<div className="flex"></div>
@@ -71,8 +73,8 @@ function user() {
 				<div>
 					<div className="text-lg">{data.data.username}</div>
 				</div>
-				{logged ? (
-					data.data.username == logged?.user_info.username ? (
+				{session ? (
+					data.data.username == user_data?.user_info.username ? (
 						<button
 							className=" ml-auto btn btn-error"
 							onClick={async () => {
