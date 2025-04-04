@@ -56,7 +56,7 @@ function NavBar() {
 			{session == "loading" ? null : user_data ? (
 				<>
 					<Link
-						to={"/user/" + user_data?.user_info.username}
+						to={"/profile/"}
 						className="flex items-center gap-2"
 					>
 						<button className="size-8 grid place-items-center rounded-full bg-primary/25 capitalize btn ">
