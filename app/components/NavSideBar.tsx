@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "@remix-run/react";
 import { useAtom } from "jotai";
-import { Heart, Home, LucideOctagon, MessageCircle, Plus } from "lucide-react";
+import { Heart, Home, LucideOctagon, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { sessionAtom, sidebarAtom } from "~/helpers/client_state";
 import { motion } from "motion/react";
@@ -20,11 +20,7 @@ let links = [
 		path: "/favourites",
 		Icon: Heart,
 	},
-	{
-		name: "messages",
-		path: "/messages",
-		Icon: MessageCircle,
-	},
+	
 ];
 
 function NavSidebar() {

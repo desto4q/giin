@@ -20,9 +20,9 @@ function NavBar() {
 		e.preventDefault();
 		let form_data = new FormData(e.target as HTMLFormElement);
 		let query = form_data.get("query") as string;
-		if (query.length < 1){
-			toast.error("search is empty")
-			return
+		if (query.length < 1) {
+			toast.error("search is empty");
+			return;
 		}
 		// if (query) {
 		// 	toast.error("search is empty");

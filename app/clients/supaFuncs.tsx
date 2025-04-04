@@ -101,6 +101,24 @@ export let getByQuery = async (query: string, page: number, limit: number) => {
 	return { data, totalPages };
 };
 
+let getPostsByUsername = async (
+	username: string,
+	page: number,
+	limit: number
+) => {
+	const from = (page - 1) * limit;
+	const to = from + limit - 1;
+	let { data, error, count } = await supabase
+		.from("posts")
+		.select("*", { count: "estimated" })
+		.eq("username", username)
+		.range(0, to);
+	if (error) {
+		throw new Error();
+	}
+	const totalPages = pagesCalculator(count as number, limit);
+	return { data, totalPages };
+};
 const getFavourites = async (page: number, limit: number, id: string) => {
 	const from = (page - 1) * limit;
 	const to = from + limit - 1;
@@ -113,7 +131,6 @@ const getFavourites = async (page: number, limit: number, id: string) => {
 		console.log(error);
 		throw new Error(error as any);
 	}
-	console.log(data);
 	const totalPages = pagesCalculator(count as number, limit);
 	return { data, totalPages };
 };
@@ -263,16 +280,6 @@ let logOutSesssion = async (callback?: () => any) => {
 	return;
 };
 
-let getPostsByUsername = async (username: string) => {
-	let { data, error } = await supabase
-		.from("posts")
-		.select("*")
-		.eq("username", username);
-	if (error) {
-		throw new Error();
-	}
-	return data;
-};
 let deletePost = async (id: number, user_id: string) => {
 	let { data, error } = await supabase
 		.from("posts")

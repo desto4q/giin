@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@remix-run/react";
-import { Heart, Home, LucideOctagon, MessageCircle, Plus } from "lucide-react";
+import { Heart, Home, LucideOctagon, Plus } from "lucide-react";
 import UserBoxSidebar from "./UserBoxSidebar.client";
 import { Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
@@ -19,11 +19,7 @@ let links = [
 		path: "/favourites",
 		Icon: Heart,
 	},
-	{
-		name: "messages",
-		path: "/messages",
-		Icon: MessageCircle,
-	},
+	
 ];
 
 function Sidebar() {
