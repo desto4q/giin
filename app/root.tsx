@@ -85,7 +85,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 					<NavSidebar />
 
 					<div className="w-full rounded-xl drop-shadow-xl overflow-hidden bg-base-100 relative">
-							<NavBar />
+						<NavBar />
 						<main className="">
 							{children}
 							<ScrollRestoration />

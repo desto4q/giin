@@ -3,10 +3,10 @@ import { Heart } from "lucide-react";
 import { useEffect } from "react";
 import { toast } from "react-toastify/unstyled";
 import {
-    checkIfUserLikedPost,
-    likePost,
-    POSTDATATYPE,
-    unLikePost,
+	checkIfUserLikedPost,
+	likePost,
+	POSTDATATYPE,
+	unLikePost,
 } from "~/clients/supaFuncs";
 
 interface LIKEDTYPE extends POSTDATATYPE {
@@ -37,7 +37,7 @@ function LikeButton(props: LIKEDTYPE) {
 
 	return (
 		<button
-			className="btn btn-circle p-2"
+			className="btn btn-circle btn-ghost "
 			onClick={async () => {
 				if (data.data) {
 					let resp = await toast.promise(

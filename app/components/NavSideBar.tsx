@@ -48,11 +48,13 @@ function NavSidebar() {
 			window.removeEventListener("resize", handleResize);
 		};
 	}, [sidebarState, setSidebar]); // Add sidebarState here
-
+	useEffect(() => {
+		console.log(sidebarState);
+	}, []);
 	return (
 		<div
-			className={`h-full fixed w-full top-0 left-0 bottom-0 z-20 pointer-events-${
-				sidebarState ? "auto" : "none"
+			className={`h-full fixed w-full top-0 left-0 bottom-0 z-20 ${
+				sidebarState ? "pointer-events-auto" : "pointer-events-none"
 			}`}
 		>
 			<div className="h-full w-full relative isolate">
@@ -108,15 +110,27 @@ function NavSidebar() {
 									loading
 								</div>
 							) : (
-								<div className="h-20 flex items-center gap-2 px-2">
+								<button
+									className="h-16 flex items-center gap-2 px-2 btn w-full btn-soft  justify-start"
+									onClick={() => {
+										nav("/profile");
+										setTimeout(() => {
+											setSidebar(false);
+										}, 150);
+									}}
+								>
 									<div className="size-12 bg-primary/25 rounded-full text-xl font-bold grid place-items-center  capitalize btn">
 										{session.user_info.username[0]}
 									</div>
-									<div>
-										<p className="font-bold capitalize">{session.user_info.username}</p>
-										<p className="text-sm opacity-45 font-bold">{session.user_info.fullname}</p>
+									<div className="flex flex-col justify-start">
+										<h2 className="font-bold capitalize ">
+											{session.user_info.username}
+										</h2>
+										<p className="text-sm opacity-45 font-bold pl-2">
+											{session.user_info.fullname}
+										</p>
 									</div>
-								</div>
+								</button>
 							)
 						) : (
 							<div

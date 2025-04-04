@@ -85,6 +85,21 @@ const getPosts = async (page: number, limit: number) => {
 	const totalPages = pagesCalculator(count as number, limit);
 	return { data, totalPages };
 };
+export let getByQuery = async (query: string, page: number, limit: number) => {
+	const from = (page - 1) * limit;
+	const to = from + limit - 1;
+	let { data, error, count } = await supabase
+		.from("posts")
+		.select("*", { count: "estimated" })
+		.ilike("title", `%${query}%`)
+		.range(from, to);
+	if (error) {
+		throw new Error(error as any);
+	}
+	console.log(data);
+	const totalPages = pagesCalculator(count as number, limit);
+	return { data, totalPages };
+};
 
 const getFavourites = async (page: number, limit: number, id: string) => {
 	const from = (page - 1) * limit;
@@ -104,7 +119,7 @@ const getFavourites = async (page: number, limit: number, id: string) => {
 };
 
 const getSinglePost = async (id: any) => {
-	console.log(id)
+	console.log(id);
 	// let { data, error } = await supabase
 	// 	.from("posts")
 	// 	.select("*, user_info(username)")
