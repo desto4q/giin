@@ -8,10 +8,10 @@ import { useAtom } from "jotai";
 import { sessionAtom } from "~/helpers/client_state";
 import { toast } from "react-toastify/unstyled";
 import ImageViewer from "~/components/ImageViewer";
-import LikeButton from "~/components/LikeButton";
 import ErrorBody from "~/components/ErrorBody";
 import LoadingBody from "~/components/LoadingBody";
-0;
+import LikeButton from "~/components/LikeButton";
+
 function route() {
 	let { id } = useParams();
 	let nav = useNavigate();
@@ -63,7 +63,8 @@ function route() {
 								<div className=" flex gap-2 flex-col md:flex-row">
 									<div className="w-full py-2   bg-base-100 rounded-md px-2">
 										<div className="my-2 flex items-center">
-											{data.data ? (
+											{data.data &&user_info? (
+												
 												<LikeButton
 													session_id={user_info.id}
 													{...data.data}
