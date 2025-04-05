@@ -1,8 +1,4 @@
-const getSecretKey = async () => {
-	const response = await fetch("/api/key", { method: "POST" });
-	const data = await response.json();
-	return data.secret;
-};
+
 // 🔐 Encrypt Data
 async function encryptData(data: object): Promise<string> {
 	let form = new FormData();

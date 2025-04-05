@@ -12,7 +12,8 @@ let Card = (props: any) => {
 				alt=""
 				className="w-full h-auto rounded-lg min-h-[150px] object-cover"
 			/>
-			<div className="p-2  text-xs">{props.title}</div>
+			<div className="p-2 text-xs whitespace-nowrap overflow-hidden text-ellipsis">{props.title}</div>
+
 		</Link>
 	);
 };

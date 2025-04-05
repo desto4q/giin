@@ -8,7 +8,7 @@ export let loader = () => {
 export let action = async ({ request }: { request: Request }) => {
     const formData = await request.formData();
     const rawData = formData.get("data") as string;
-    console.log(rawData)
+    
 
     if (!rawData) {
         return json({ error: "Missing data" }, { status: 400 });
