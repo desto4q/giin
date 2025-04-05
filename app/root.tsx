@@ -11,16 +11,15 @@ import "./tailwind.css";
 import NavBar from "~/components/NavBar";
 import Sidebar from "~/components/Sidebar";
 import { ToastContainer } from "react-toastify/unstyled";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useLayoutEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import {
 	QueryClient,
 	QueryClientConfig,
 	QueryClientProvider,
 } from "@tanstack/react-query";
-import { themes } from "./helpers/helpers";
 import { useAtom } from "jotai";
-import { sessionAtom } from "./helpers/client_state";
+import { currentThemeAtom, sessionAtom, THEME } from "./helpers/client_state";
 import { getSession } from "./clients/supaFuncs";
 import NavSidebar from "./components/NavSideBar";
 export const links: LinksFunction = () => [
@@ -42,6 +41,14 @@ let client = new QueryClient();
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	// const { ENV } = useLoaderData<typeof loader>();
+	let [currentTheme, setCurrentTheme] = useAtom(currentThemeAtom);
+
+	useLayoutEffect(() => {
+		let theme = localStorage.getItem("theme") as THEME;
+		if (theme) {
+			setCurrentTheme(theme);
+		}
+	}, []);
 	const location = useLocation();
 	let [sessionState, setSession] = useAtom(sessionAtom);
 	let updateSession = async () => {
@@ -57,7 +64,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<html
 			lang="en"
-			data-theme={themes.abyss}
+			data-theme={currentTheme ?? "nord"}
 		>
 			<head>
 				{/* <script

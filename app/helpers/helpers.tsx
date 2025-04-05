@@ -9,6 +9,11 @@ const themes = {
     corporate: "corporate",
     synthwave: "synthwave",
     retro: "retro",
+    dim: "dim",
+    nord: "nord",
+    night: "night",
+    abyss: "abyss",
+
     cyberpunk: "cyberpunk",
     valentine: "valentine",
     halloween: "halloween",
@@ -27,14 +32,10 @@ const themes = {
     business: "business",
     acid: "acid",
     lemonade: "lemonade",
-    night: "night",
     coffee: "coffee",
     winter: "winter",
-    dim: "dim",
-    nord: "nord",
     sunset: "sunset",
     caramellatte: "caramellatte",
-    abyss: "abyss",
     silk: "silk",
 };
 export { gen,themes};

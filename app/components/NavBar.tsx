@@ -1,11 +1,16 @@
 import { Link, useNavigate } from "@remix-run/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAtom } from "jotai";
-import { ChevronDown, Menu, Search } from "lucide-react";
+import { ChevronDown, Lightbulb, Menu, Search } from "lucide-react";
 import { FormEvent } from "react";
 import { toast } from "react-toastify/unstyled";
 import { logOutSesssion, USER } from "~/clients/supaFuncs";
-import { sessionAtom, sidebarAtom } from "~/helpers/client_state";
+import {
+	currentThemeAtom,
+	sessionAtom,
+	sidebarAtom,
+} from "~/helpers/client_state";
+import { themes } from "~/helpers/helpers";
 function NavBar() {
 	let navigate = useNavigate();
 	let queryclient = useQueryClient();
@@ -29,6 +34,8 @@ function NavBar() {
 		// }
 		navigate(`/search/${query}`);
 	};
+	let [currentTheme, setCurrentTheme] = useAtom(currentThemeAtom);
+
 	return (
 		<div className="z-20 h-20  bg-base-100  w-full sticky top-0 left-0 flex  items-center  px-4 gap-2 ">
 			{/* <p>{JSON.stringify(data.data)}</p> */}
@@ -113,6 +120,32 @@ function NavBar() {
 					Login
 				</button>
 			) : null}
+			<div className="dropdown dropdown-end">
+				<button className="btn btn-soft btn-primary btn-circle">
+					<Lightbulb />
+				</button>
+				<ul
+					tabIndex={0}
+					className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+				>
+					{Object.keys(themes).map((e, i) => {
+						if (i > 12) {
+							return null;
+						}
+						return (
+							<li
+								key={e}
+								onClick={() => {
+									setCurrentTheme(e);
+									localStorage.setItem("theme", e);
+								}}
+							>
+								<a>{e}</a>
+							</li>
+						);
+					})}
+				</ul>
+			</div>
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
 import { atom } from "jotai";
 import { USER } from "~/clients/supaFuncs";
+import { themes } from "./helpers";
 
 interface AUTHFORM {
 	email: string;
@@ -16,6 +17,12 @@ let tabs = ["edit", "posts"] as const;
 let tabAtom = atom<(typeof tabs)[number]>("posts");
 
 let sidebarAtom = atom<boolean>(false);
-export { userFormAtom, sessionAtom, tabAtom, sidebarAtom };
 
-export type { AUTHFORM };
+type THEME = (typeof themes)[keyof typeof themes];
+
+
+
+const currentThemeAtom = atom<THEME>(themes.acid);
+export { userFormAtom, sessionAtom, tabAtom, sidebarAtom, currentThemeAtom };
+
+export type { AUTHFORM, THEME };
