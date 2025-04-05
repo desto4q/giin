@@ -26,7 +26,9 @@ function UserBoxSidebar() {
 	if (!session) {
 		return (
 			<div className="w-full h-[150px] bg-base-100 rounded-md grid place-items-center drop-shadow-lg">
-				<button className="btn  btn-primary">Login</button>
+				<button className="btn  btn-primary" onClick={()=>{
+					navigate("/auth/login")
+				}}> Login</button>
 			</div>
 		);
 	}
