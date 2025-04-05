@@ -1,11 +1,7 @@
 import { useNavigate } from "@remix-run/react";
 import { useAtom } from "jotai";
 import { UploadIcon } from "lucide-react";
-import {
-	ChangeEvent,
-	SyntheticEvent, useRef,
-	useState
-} from "react";
+import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
 import { toast } from "react-toastify/unstyled";
 import {
 	getSession,
@@ -13,6 +9,7 @@ import {
 	uploadPost,
 	USER,
 } from "~/clients/supaFuncs";
+import LoadingBody from "~/components/LoadingBody";
 import NoUser from "~/components/NoUser";
 import { sessionAtom } from "~/helpers/client_state";
 import {
@@ -37,9 +34,12 @@ function route() {
 	// 	}
 	// }, [session]);
 	let user_info = session as USER;
-	if (!session){
-		return <NoUser/>
+	if (!session) {
+		return <NoUser />;
 	}
+		if (session == "loading") {
+			return <LoadingBody />;
+		}
 	let onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setVideo(null);
 		setImage(null);

@@ -1,4 +1,3 @@
-import CryptoJS from "crypto-js/";
 const getSecretKey = async () => {
 	const response = await fetch("/api/key", { method: "POST" });
 	const data = await response.json();
@@ -6,20 +5,25 @@ const getSecretKey = async () => {
 };
 // 🔐 Encrypt Data
 async function encryptData(data: object): Promise<string> {
-	return CryptoJS.AES.encrypt(
-		JSON.stringify(data),
-		await getSecretKey()
-	).toString();
+	let form = new FormData();
+	form.append("data", JSON.stringify(data));
+	let resp = await fetch("/api/encrypt", {
+		method: "POST",
+		body: form,
+	});
+	let response = await resp.json();
+	return response.encrypted;
 }
-
 // 🔓 Decrypt Data
 async function decryptData(cipherText: string): Promise<object | null> {
-	try {
-		const bytes = CryptoJS.AES.decrypt(cipherText, await getSecretKey());
-		return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-	} catch (error) {
-		console.error("Decryption failed:", error);
-		return null;
-	}
+	let form = new FormData();
+	form.append("data", cipherText);
+	let resp = await fetch("/api/decrypt", {
+		method: "POST",
+		body: form,
+	});
+	let response = await resp.json();
+	return response.decrypted;
+	
 }
 export { encryptData, decryptData };
