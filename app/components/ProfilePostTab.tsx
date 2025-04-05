@@ -4,6 +4,7 @@ import Card from "./Card";
 import { gen } from "~/helpers/helpers";
 import { useSearchParams } from "@remix-run/react";
 import Pagination from "./Pagination";
+import ErrorBody from "./ErrorBody";
 
 function ProfilePostTab(props: USER) {
 	const [searchParams] = useSearchParams();
@@ -19,13 +20,13 @@ function ProfilePostTab(props: USER) {
 	});
 
 	if (data.isFetching) {
-		return <>loading</>;
+		return <></>;
 	}
 	if (data.error) {
-		return <>error</>;
+		return <ErrorBody refetch={data.refetch} />;
 	}
 	return (
-		<div className="columns-3  md:columns-5 pb-20">
+		<div className="columns-3   md:columns-5 pb-20">
 			{data.data?.data.map((e) => {
 				return (
 					<Card

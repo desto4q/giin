@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getFavourites, USER } from "~/clients/supaFuncs";
 import Card from "./Card";
 import Pagination from "./Pagination";
+import LoadingBody from "./LoadingBody";
 
 let UserLiked = (props: { user_data: USER }) => {
 	const [searchParams] = useSearchParams();
@@ -14,11 +15,11 @@ let UserLiked = (props: { user_data: USER }) => {
 		refetchOnWindowFocus: false,
 	});
 	if (data.isFetching) {
-		return <div>fetching</div>;
+		return <LoadingBody/>
 	}
 	return (
 		<div className="p-2 bg-base-200 rounded-lg">
-			<div className="columns-2 sm:columns-3 md:columns-4 lg:columns-6 p-2  rounded-md">
+			<div className="columns-2 sm:columns-3 md:columns-4 lg:columns-6 p-2  rounded-md pb-20">
 				{data.data?.data?.map((e) => {
 					return (
 						<Card

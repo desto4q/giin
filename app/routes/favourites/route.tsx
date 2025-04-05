@@ -24,7 +24,7 @@ function route() {
 	return (
 		<div className="p-2">
 			<div className="flex items-center gap-2">
-				<div className="size-16 rounded-full font-black capitalize grid place-items-center bg-primary/25 text-xl">
+				<div className="size-16 rounded-full font-black capitalize grid place-items-center bg-primary/25 text-xl ">
 					{user_data.user_info.username[0]}
 				</div>
 				<div>

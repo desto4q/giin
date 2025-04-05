@@ -9,6 +9,8 @@ import { sessionAtom } from "~/helpers/client_state";
 import { toast } from "react-toastify/unstyled";
 import ImageViewer from "~/components/ImageViewer";
 import LikeButton from "~/components/LikeButton";
+import ErrorBody from "~/components/ErrorBody";
+import LoadingBody from "~/components/LoadingBody";
 0;
 function route() {
 	let { id } = useParams();
@@ -25,32 +27,13 @@ function route() {
 	});
 
 	if (data.isError) {
-		return (
-			<div className="w-full h-[calc(100dvh-80px)] grid place-items-center">
-				<div className="flex flex-col gap-2">
-					<h2 className="text-lg font-bold">Error occured</h2>
-					<button
-						className="btn btn-secondary"
-						onClick={() => {
-							data.refetch();
-						}}
-					>
-						Reload
-					</button>
-				</div>
-			</div>
-		);
+		return <ErrorBody refetch={data.refetch} />;
 	}
 
 	let user_info = sessionState as USER;
 
 	if (data.isFetching) {
-		return (
-			<div className="flex gap-2 px-4 flex-col">
-				<div className="h-[350px] skeleton w-full"></div>
-				<div className="h-[400px] skeleton w-full"></div>
-			</div>
-		);
+		return <LoadingBody />;
 	}
 	// return <>{JSON.stringify(data.data)}</>
 	return (

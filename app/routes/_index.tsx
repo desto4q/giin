@@ -4,8 +4,8 @@ import { useSearchParams } from "@remix-run/react";
 import Pagination from "~/components/Pagination";
 import Card from "~/components/Card";
 import { gen } from "~/helpers/helpers";
-
-let tempArray = Array(5).fill((e: number) => e);
+import LoadingBody from "~/components/LoadingBody";
+import ErrorBody from "~/components/ErrorBody";
 function Index() {
 	const [searchParams] = useSearchParams();
 	let page = Number(searchParams.get("page"));
@@ -14,25 +14,11 @@ function Index() {
 		queryKey: ["default_posts"],
 		queryFn: async () => await getPosts(page == 0 ? 1 : page, 20),
 	});
-	// return (<>{import.meta.env.VITE_SUPA_KEY}</>)
 	if (data.isError) {
-		return <div>error</div>;
+		return <ErrorBody refetch={data.refetch} />;
 	}
 	if (data.isFetching) {
-		return (
-			<div className="p-2 px-4">
-				<div className="grid grid-cols-[repeat(auto-fit,250px)] gap-4 p-2">
-					{tempArray.map((e, i) => {
-						return (
-							<div
-								className={`h-[200px] w-full skeleton`}
-								key={gen()}
-							></div>
-						);
-					})}
-				</div>
-			</div>
-		);
+		return <LoadingBody />;
 	}
 	if (!data.data?.data) {
 		return <></>;
