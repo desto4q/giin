@@ -1,6 +1,8 @@
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { getSession, USER } from "~/clients/supaFuncs";
+import LoadingBody from "~/components/LoadingBody";
+import NoUser from "~/components/NoUser";
 import UserLiked from "~/components/UserLiked";
 import { sessionAtom } from "~/helpers/client_state";
 
@@ -14,11 +16,10 @@ function route() {
 	}, []);
 
 	if (!session) {
-		console.log("not");
-		return <div>no user</div>;
+		return <NoUser/>;
 	}
 	if (session == "loading") {
-		return <>loading data</>;
+		return <LoadingBody />;
 	}
 	let user_data = session as USER;
 	return (

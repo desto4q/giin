@@ -3,10 +3,8 @@ import { useAtom } from "jotai";
 import { UploadIcon } from "lucide-react";
 import {
 	ChangeEvent,
-	SyntheticEvent,
-	useEffect,
-	useRef,
-	useState,
+	SyntheticEvent, useRef,
+	useState
 } from "react";
 import { toast } from "react-toastify/unstyled";
 import {
@@ -15,6 +13,7 @@ import {
 	uploadPost,
 	USER,
 } from "~/clients/supaFuncs";
+import NoUser from "~/components/NoUser";
 import { sessionAtom } from "~/helpers/client_state";
 import {
 	generate_image_thumb,
@@ -32,13 +31,15 @@ function route() {
 	let temp_url = useRef<string | any>("");
 	let content_type = useRef<"image" | "video" | null>(null);
 	let [session, setSession] = useAtom<"loading" | USER | null>(sessionAtom);
-	useEffect(() => {
-		if (session == null) {
-			navigate("/auth/login");
-		}
-	}, [session]);
+	// useEffect(() => {
+	// 	if (session == null) {
+	// 		navigate("/auth/login");
+	// 	}
+	// }, [session]);
 	let user_info = session as USER;
-
+	if (!session){
+		return <NoUser/>
+	}
 	let onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setVideo(null);
 		setImage(null);

@@ -4,6 +4,7 @@ import { getFavourites, USER } from "~/clients/supaFuncs";
 import Card from "./Card";
 import Pagination from "./Pagination";
 import LoadingBody from "./LoadingBody";
+import ErrorBody from "./ErrorBody";
 
 let UserLiked = (props: { user_data: USER }) => {
 	const [searchParams] = useSearchParams();
@@ -15,7 +16,11 @@ let UserLiked = (props: { user_data: USER }) => {
 		refetchOnWindowFocus: false,
 	});
 	if (data.isFetching) {
-		return <LoadingBody/>
+		return <LoadingBody />;
+	}
+
+	if (data.isError) {
+		return <ErrorBody refetch={data.refetch} />;
 	}
 	return (
 		<div className="p-2 bg-base-200 rounded-lg">

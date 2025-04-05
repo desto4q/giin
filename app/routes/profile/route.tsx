@@ -1,6 +1,8 @@
 import { useAtom } from "jotai";
 import { useEffect } from "react";
-import { getSession, USER } from "~/clients/supaFuncs";
+import { getSession, logOutSesssion, USER } from "~/clients/supaFuncs";
+import LoadingBody from "~/components/LoadingBody";
+import NoUser from "~/components/NoUser";
 import ProfileEditTab from "~/components/ProfileEditTab";
 import ProfilePostTab from "~/components/ProfilePostTab";
 import { sessionAtom, tabAtom } from "~/helpers/client_state";
@@ -20,10 +22,10 @@ function route() {
 		updateSession();
 	}, []);
 	if (!sessionState) {
-		return <>no user</>;
+		return <NoUser />;
 	}
 	if (sessionState == "loading") {
-		return <>fetching</>;
+		return <LoadingBody />;
 	}
 
 	return (
@@ -41,6 +43,15 @@ function route() {
 						{" "}
 						{sessionState.user_info.fullname}
 					</p>
+				</div>
+				<div
+					className="btn btn-error ml-auto btn-soft"
+					onClick={() => {
+						logOutSesssion();
+						setSession(null);
+					}}
+				>
+					logout
 				</div>
 			</div>
 			<div

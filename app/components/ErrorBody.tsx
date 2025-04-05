@@ -1,9 +1,14 @@
-function ErrorBody() {
+function ErrorBody(props: { refetch: () => any }) {
 	return (
 		<div className="w-full h-[calc(100dvh-80px)] grid place-items-center">
-			<div>
+			<div className="flex flex-col gap-2">
 				Error Occured
-				<button className="btn btn-error">Error</button>
+				<button
+					className="btn btn-error mt-2"
+					onClick={props.refetch}
+				>
+					Error
+				</button>
 			</div>
 		</div>
 	);
