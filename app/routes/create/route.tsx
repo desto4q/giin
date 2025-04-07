@@ -66,7 +66,7 @@ function route() {
 
 	const onSubmit = async (e: SyntheticEvent) => {
 		e.preventDefault();
-		SetDisabled(true)
+		SetDisabled(true);
 		const form = e.target as HTMLFormElement;
 		const formData = new FormData(form);
 		const user = getSession();
@@ -83,10 +83,12 @@ function route() {
 					success: "uploaded",
 				}
 			);
+		SetDisabled(false);
+
 			return;
 		}
 		await handleImageUpload(uploadForm, formData, session as USER);
-		SetDisabled(false)
+		SetDisabled(false);
 	};
 
 	const handleImageUpload = async (
