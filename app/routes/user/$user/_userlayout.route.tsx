@@ -1,15 +1,23 @@
-import { useParams } from "@remix-run/react";
+import { useParams, useSearchParams } from "@remix-run/react";
 import { useQuery } from "@tanstack/react-query";
 import { getPostsByUsername } from "~/clients/supaFuncs";
 import Card from "~/components/Card";
+import Pagination from "~/components/Pagination";
 import { gen } from "~/helpers/helpers";
 
 function route() {
 	let { user } = useParams();
+	const [searchParams] = useSearchParams();
+	let page = Number(searchParams.get("page"));
+
 	let data = useQuery({
 		queryKey: ["posts", user],
 		queryFn: async () => {
-			return await getPostsByUsername(user as string);
+			return await getPostsByUsername(
+				user as string,
+				page == 0 ? 1 : page,
+				20
+			);
 		},
 	});
 	if (data.isFetching ?? !data.data) {
@@ -26,10 +34,17 @@ function route() {
 				{data.isFetching ? (
 					<>loading</>
 				) : (
-					data.data?.map((e) => <Card key={gen()} {...e} />)
+					data.data.data?.map((e) => (
+						<Card
+							key={gen()}
+							{...e}
+						/>
+					))
 				)}
 			</div>
-			
+			<div className="fixed bottom-0 w-full grid place-items-center py-2 bg-base-300/25 left-0  rounded-b-lg">
+				<Pagination totalPages={data.data?.totalPages as number} />
+			</div>
 		</div>
 	);
 }

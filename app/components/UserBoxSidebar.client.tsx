@@ -26,9 +26,15 @@ function UserBoxSidebar() {
 	if (!session) {
 		return (
 			<div className="w-full h-[150px] bg-base-100 rounded-md grid place-items-center drop-shadow-lg">
-				<button className="btn  btn-primary" onClick={()=>{
-					navigate("/auth/login")
-				}}> Login</button>
+				<button
+					className="btn  btn-primary"
+					onClick={() => {
+						navigate("/auth/login");
+					}}
+				>
+					{" "}
+					Login
+				</button>
 			</div>
 		);
 	}
@@ -44,9 +50,12 @@ function UserBoxSidebar() {
 				{user_info.user_info.fullname}
 				{/* {JSON.stringify(user_info.user_info)} */}
 			</p>
-			<button className="btn   btn-sm h-full w-full py-2 text-sm mt-2" onClick={()=>{
-				navigate('/profile')
-			}}>
+			<button
+				className="btn   btn-sm h-full w-full py-2 text-sm mt-2"
+				onClick={() => {
+					navigate("/profile");
+				}}
+			>
 				My Profile
 			</button>
 		</div>

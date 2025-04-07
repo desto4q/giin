@@ -63,8 +63,7 @@ function route() {
 								<div className=" flex gap-2 flex-col md:flex-row">
 									<div className="w-full py-2   bg-base-100 rounded-md px-2">
 										<div className="my-2 flex items-center">
-											{data.data &&user_info? (
-												
+											{data.data && user_info ? (
 												<LikeButton
 													session_id={user_info.id}
 													{...data.data}
