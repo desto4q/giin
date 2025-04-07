@@ -28,18 +28,14 @@ function route() {
 	let temp_url = useRef<string | any>("");
 	let content_type = useRef<"image" | "video" | null>(null);
 	let [session, setSession] = useAtom<"loading" | USER | null>(sessionAtom);
-	// useEffect(() => {
-	// 	if (session == null) {
-	// 		navigate("/auth/login");
-	// 	}
-	// }, [session]);
 	let user_info = session as USER;
+	let [disabled, SetDisabled] = useState<boolean>(false);
 	if (!session) {
 		return <NoUser />;
 	}
-		if (session == "loading") {
-			return <LoadingBody />;
-		}
+	if (session == "loading") {
+		return <LoadingBody />;
+	}
 	let onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setVideo(null);
 		setImage(null);
@@ -70,7 +66,7 @@ function route() {
 
 	const onSubmit = async (e: SyntheticEvent) => {
 		e.preventDefault();
-
+		SetDisabled(true)
 		const form = e.target as HTMLFormElement;
 		const formData = new FormData(form);
 		const user = getSession();
@@ -80,10 +76,17 @@ function route() {
 			return;
 		}
 		if (video) {
-			await handleVideoUpload(uploadForm, formData, session as USER);
+			await toast.promise(
+				handleVideoUpload(uploadForm, formData, session as USER),
+				{
+					pending: "uploading",
+					success: "uploaded",
+				}
+			);
 			return;
 		}
 		await handleImageUpload(uploadForm, formData, session as USER);
+		SetDisabled(false)
 	};
 
 	const handleImageUpload = async (
@@ -222,7 +225,10 @@ function route() {
 							className="textarea w-full"
 						/>
 					</div>
-					<button className="btn bg-primary/25 h-auto py-4 w-auto text-lg">
+					<button
+						className="btn bg-primary/25 h-auto py-4 w-auto text-lg"
+						disabled={disabled}
+					>
 						Submit
 					</button>
 				</div>
