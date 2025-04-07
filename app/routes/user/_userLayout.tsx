@@ -14,11 +14,11 @@ function user() {
 	let { user } = useParams();
 	let user_name = user as string;
 
-	useEffect(() => {
-		if (!session) {
-			navigate("/");
-		}
-	}, [session]);
+	// useEffect(() => {
+	// 	if (!session) {
+	// 		navigate("/");
+	// 	}
+	// }, [session]);
 	useEffect(() => {
 		if (location.pathname === "/user" || location.pathname === "/user/") {
 			navigate("/");
